@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz San Valentín, Mi Niña</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --romantic-pink: #ff85a1;
+            --deep-red: #ff4d6d;
+            --soft-gold: #f7d794;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(to bottom, #1a0a1a, #4a0e1c);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .romantic-title {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Fondo de pétalos animados */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Corazón latente */
+        .heart-beat {
+            animation: beat 1.2s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Estilo Tulipanes */
+        .tulip-container {
+            position: relative;
+            height: 150px;
+            width: 40px;
+            display: inline-block;
+            margin: 0 10px;
+            transition: all 0.5s ease;
+        }
+
+        .tulip-head {
+            width: 30px;
+            height: 40px;
+            border-radius: 50% 50% 10% 10%;
+            position: absolute;
+            top: 0;
+            left: 5px;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
+        }
+
+        .stem {
+            width: 4px;
+            height: 110px;
+            background: #2d6a4f;
+            position: absolute;
+            bottom: 0;
+            left: 18px;
+        }
+
+        .leaf {
+            width: 20px;
+            height: 40px;
+            background: #40916c;
+            border-radius: 0 100% 0 100%;
+            position: absolute;
+            bottom: 40px;
+            left: 18px;
+            transform-origin: left bottom;
+        }
+
+        #music-visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 30px;
+        }
+
+        .bar {
+            width: 3px;
+            background: var(--romantic-pink);
+            animation: dance 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes dance {
+            from { height: 5px; }
+            to { height: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-4xl mx-auto px-6 py-12 text-center relative z-10">
+        
+        <!-- Hero Section -->
+        <section class="mb-16 mt-10">
+            <h1 class="romantic-title text-6xl md:text-8xl mb-4 floating">Feliz San Valentín</h1>
+            <h2 class="text-2xl md:text-3xl text-pink-300 font-light mb-8">Para mi bebé, mi princesita hermosa</h2>
+            <div class="heart-beat text-6xl mb-8">💖</div>
+            <p class="text-xl max-w-2xl mx-auto leading-relaxed glass-card p-6 italic">
+                "eres muy especial para mi muy buena me gusta todo de ti tengo muchas ganitas de abrazarte y darte besitos ricos mucho cariñito y cuidarte y protegerte de todo eres mi princesita hermosa la mejor del mundo muy rica y sepsi tambien me quieres muchito a pesar de ser tan tontito y yo te quiero muchito mas bebe hay cositas que nunca me has dicho"
+            </p>
+        </section>
+
+        <!-- Jardín de Tulipanes Interactivos -->
+        <section class="mb-16 py-10 glass-card">
+            <h3 class="romantic-title text-4xl mb-6">Tulipanes para mi bebé</h3>
+            <p class="mb-8 text-pink-100">Haz clic en el botón para que te regale tulipanes amarillos y rosas</p>
+            
+            <div id="tulip-garden" class="h-40 flex items-end justify-center overflow-hidden mb-8">
+                <!-- Los tulipanes aparecerán aquí -->
+            </div>
+
+            <button onclick="addTulip()" class="bg-gradient-to-r from-pink-500 to-red-500 px-8 py-3 rounded-full font-bold shadow-lg transform hover:scale-110 transition active:scale-95">
+                🌷 Plantar un Tulipán 🌷
+            </button>
+        </section>
+
+        <!-- Footer Musical simulado -->
+        <footer class="mt-20 border-t border-white/10 pt-10 flex flex-col items-center">
+            <div id="music-visualizer" class="mb-4">
+                <div class="bar" style="animation-delay: 0.1s"></div>
+                <div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.5s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+                <div class="bar" style="animation-delay: 0.6s"></div>
+                <div class="bar" style="animation-delay: 0.1s"></div>
+            </div>
+            <p class="text-sm opacity-60">Me encantas. Siempre.</p>
+        </footer>
+    </main>
+
+    <script>
+        // --- CONFIGURACIÓN DEL FONDO ANIMADO ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 5 + 2;
+                this.speed = Math.random() * 2 + 1;
+                this.wind = Math.random() * 1 - 0.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 2 - 1;
+                this.color = Math.random() > 0.5 ? '#ff4d6d' : '#ff85a1';
+            }
+            update() {
+                this.y += this.speed;
+                this.x += this.wind;
+                this.rotation += this.rotationSpeed;
+                if (this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size, -this.size, -this.size * 2, this.size / 2, 0, this.size);
+                ctx.bezierCurveTo(this.size * 2, this.size / 2, this.size, -this.size, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- LÓGICA DE LOS TULIPANES ---
+        function addTulip() {
+            const garden = document.getElementById('tulip-garden');
+            const colors = ['#FFD700', '#FF85A1', '#FF69B4', '#F0E68C']; 
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            const tulip = document.createElement('div');
+            tulip.className = 'tulip-container floating';
+            tulip.style.animationDelay = (Math.random() * 2) + 's';
+            
+            tulip.innerHTML = `
+                <div class="stem"></div>
+                <div class="leaf"></div>
+                <div class="tulip-head" style="background: ${color}"></div>
+            `;
+            
+            garden.appendChild(tulip);
+            
+            if(garden.children.length > 15) {
+                garden.removeChild(garden.firstChild);
+            }
+        }
+
+        window.onload = () => {
+            for(let i=0; i<3; i++) addTulip();
+        };
+    </script>
+</body>
+</html>
