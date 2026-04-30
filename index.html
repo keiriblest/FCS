@@ -3,516 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estas flores son para ti</title>
+    <title>Para Anais Pérez Puig</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
             font-family: 'Quicksand', sans-serif;
-            overflow: hidden; 
-            height: 100vh;
-            width: 100vw;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe4e6 100%);
+            overflow-x: hidden;
+            color: #1f2937;
         }
-
-        /* Contenedor de la carta */
-        #messageCard {
-            transition: all 1s ease-in-out;
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 50; 
-            position: relative;
-            max-height: 80vh; 
-            width: 90%;
-            max-width: 550px;
-            overflow-y: auto;
-            scrollbar-width: none;
-            margin-bottom: 40px; 
-        }
-
-        #messageCard::-webkit-scrollbar {
-            display: none;
-        }
-
-        #messageCard.hidden-card {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-50px);
-        }
-
-        /* Capas de Césped */
-        .grass-base {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 45px;
-            background: linear-gradient(to bottom, #7fb03e, #5d822d);
-            z-index: 30; 
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-        }
-
-        .grass-blades {
-            position: fixed;
-            bottom: 40px;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background-image: radial-gradient(ellipse at 50% 100%, #8bc34a 3px, transparent 4px);
-            background-size: 18px 30px;
-            z-index: 29;
-        }
-
-        /* Contenedor de los tulipanes */
-        .tulip-container {
-            position: fixed;
-            bottom: 15px; 
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            z-index: 10;
-            pointer-events: none;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .tulip-container.expanded {
-            bottom: 45px; 
-            transform: scale(1.6);
-            transform-origin: bottom center;
-        }
-
-        .tulip {
-            position: relative;
-            transform-origin: bottom center;
-            animation: sway 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes sway {
-            0% { transform: rotate(-3deg); }
-            100% { transform: rotate(3deg); }
-        }
-
-        .flower-head {
-            width: 50px;
-            height: 60px;
-            background: #ffcc00;
-            border-radius: 50% 50% 10% 10%;
-            position: relative;
-            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1);
-        }
-
-        .flower-head::before, .flower-head::after {
-            content: '';
-            position: absolute;
-            background: #ffd633;
-            width: 30px;
-            height: 55px;
-            border-radius: 50% 50% 10% 10%;
-            top: 0;
-        }
-
-        .flower-head::before { left: -10px; transform: rotate(-15deg); }
-        .flower-head::after { right: -10px; transform: rotate(15deg); }
-
-        .stem {
-            width: 6px;
-            height: 200px;
-            background: #6b8e23;
-            margin: 0 auto;
-            border-radius: 3px;
-        }
-
-        .leaf {
-            position: absolute;
-            width: 30px;
-            height: 80px;
-            background: #6b8e23;
-            border-radius: 0 100% 0 100%;
-            bottom: 40px;
-            left: -20px;
-            transform: rotate(-30deg);
-        }
-
-        .leaf-right {
-            left: auto;
-            right: -20px;
-            border-radius: 100% 0 100% 0;
-            transform: rotate(30deg);
-        }
-
-        /* DISEÑO DE PANDA ESTILO PELUCHE ADORABLE */
-        #pandaContainer {
-            position: fixed;
-            bottom: 42px; /* Ligeramente hundido en el césped para parecer más pesado como peluche */
-            left: 50%;
-            transform: translateX(-50%) scale(0);
-            z-index: 25; 
-            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            opacity: 0;
-        }
-
-        #pandaContainer.visible {
-            transform: translateX(-50%) scale(0.75);
-            opacity: 1;
-        }
-
-        .panda-plush {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-        }
-
-        /* Cabeza Redondita */
-        .panda-head {
-            width: 120px;
-            height: 105px;
-            background: #ffffff;
-            border-radius: 60% 60% 50% 50%;
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            z-index: 5;
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05);
-        }
-
-        .panda-ear-plush {
-            width: 40px;
-            height: 40px;
-            background: #333333;
-            border-radius: 50%;
-            position: absolute;
-            top: 10px;
-        }
-        .panda-ear-plush.left { left: 25px; transform: rotate(-10deg); }
-        .panda-ear-plush.right { right: 25px; transform: rotate(10deg); }
-
-        /* Ojos Kawaii */
-        .panda-patch-plush {
-            width: 42px;
-            height: 48px;
-            background: #333333;
-            border-radius: 50%;
-            position: absolute;
-            top: 28px;
-        }
-        .panda-patch-plush.left { left: 15px; transform: rotate(10deg); }
-        .panda-patch-plush.right { right: 15px; transform: rotate(-10deg); }
-
-        .panda-eye-plush {
-            width: 14px;
-            height: 14px;
-            background: #000;
-            border-radius: 50%;
-            position: absolute;
-            top: 15px;
-            left: 14px;
-        }
-
-        /* Brillos en los ojos */
-        .panda-eye-plush::before {
-            content: '';
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: white;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-        }
-
-        .panda-blush-plush {
-            width: 18px;
-            height: 10px;
-            background: #ffb7c5;
-            border-radius: 50%;
-            position: absolute;
-            top: 68px;
-            opacity: 0.7;
-        }
-        .panda-blush-plush.left { left: 10px; }
-        .panda-blush-plush.right { right: 10px; }
-
-        .panda-nose-plush {
-            width: 14px;
-            height: 9px;
-            background: #333;
-            border-radius: 50%;
-            position: absolute;
-            top: 65px;
-            left: 53px;
-        }
-
-        /* Cuerpo de peluche */
-        .panda-body-plush {
-            width: 130px;
-            height: 110px;
-            background: #ffffff;
-            border-radius: 50% 50% 45% 45%;
-            position: absolute;
-            bottom: 0;
-            left: 25px;
-            z-index: 3;
-            box-shadow: inset 0 -8px 15px rgba(0,0,0,0.05);
-        }
-
-        /* Banda negra hombros */
-        .panda-shoulders {
-            width: 130px;
-            height: 45px;
-            background: #333333;
-            position: absolute;
-            top: 100px;
-            left: 25px;
-            z-index: 4;
-            border-radius: 50% 50% 0 0;
-        }
-
-        /* Patitas */
-        .panda-arm-plush {
-            width: 45px;
-            height: 60px;
-            background: #333333;
-            border-radius: 25px;
-            position: absolute;
-            z-index: 6;
-        }
-
-        .panda-arm-plush.left {
-            left: 10px;
-            top: 95px;
-            transform: rotate(25deg);
-        }
-
-        .panda-arm-plush.right-wave {
-            right: 10px;
-            top: 55px;
-            transform-origin: bottom center;
-            animation: pandaWavePlush 2s ease-in-out infinite;
-        }
-
-        @keyframes pandaWavePlush {
-            0%, 100% { transform: rotate(15deg); }
-            50% { transform: rotate(-35deg); }
-        }
-
-        /* Estilos de la tarjeta */
-        .content-card {
-            background: rgba(252, 250, 240, 0.98); 
-            backdrop-filter: blur(15px);
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
-            padding: 2.5rem 2rem;
-            border: 2px solid rgba(212, 160, 23, 0.4); 
-            text-align: center;
-        }
-
-        .romantic-text {
+        .font-romantic {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: #b3860f; 
-            margin-bottom: 1.5rem;
+        }
+        .heart {
+            position: fixed;
+            top: -10%;
+            user-select: none;
+            pointer-events: none;
+            z-index: 0;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+        /* Cabecera mejorada para mayor visibilidad */
+        .hero-title {
+            color: #be123c; /* Rose-700 para más contraste */
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
             line-height: 1.2;
         }
 
-        .message-text {
-            color: #2d2d2d; 
-            line-height: 1.6;
-            font-size: 1.05rem;
-            letter-spacing: 0.3px;
+        /* Tarjetas con más realce */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 2px solid #fff;
+            box-shadow: 0 20px 50px rgba(225, 29, 72, 0.1);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            margin-bottom: 3rem;
+            transition: transform 0.3s ease;
         }
-
-        .floating-petals {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 40; 
+        @media (min-width: 768px) {
+            .glass-card {
+                padding: 3.5rem;
+            }
         }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        .glass-card:hover {
+            transform: translateY(-5px);
         }
-
-        .petal {
-            position: absolute;
-            background: #fff4cc;
-            width: 15px;
-            height: 20px;
-            border-radius: 100% 0% 100% 0%;
-            animation: fall 10s linear infinite;
-        }
-
-        .btn-view {
-            background: #ffcc00;
-            color: #5a4600;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            border: none;
-            margin: 20px 0;
-        }
-
-        .btn-view:hover {
-            transform: scale(1.05);
-            background: #ffd633;
-        }
-
-        #backBtn {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
+        .reveal {
             opacity: 0;
-            transition: opacity 1s;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #ffcc00;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Texto más grande y legible */
+        .text-content {
+            white-space: pre-line;
+            line-height: 1.9;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #374151;
+            text-align: left;
+        }
+        /* Contenedor principal */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-    <div class="floating-petals" id="petals"></div>
-    
-    <!-- El panda estilo peluche -->
-    <div id="pandaContainer">
-        <div class="panda-plush">
-            <div class="panda-ear-plush left"></div>
-            <div class="panda-ear-plush right"></div>
-            <div class="panda-arm-plush left"></div>
-            <div class="panda-body-plush"></div>
-            <div class="panda-shoulders"></div>
-            <div class="panda-arm-plush right-wave"></div>
-            <div class="panda-head">
-                <div class="panda-patch-plush left">
-                    <div class="panda-eye-plush"></div>
-                </div>
-                <div class="panda-patch-plush right">
-                    <div class="panda-eye-plush"></div>
-                </div>
-                <div class="panda-blush-plush left"></div>
-                <div class="panda-blush-plush right"></div>
-                <div class="panda-nose-plush"></div>
+    <div id="heart-container"></div>
+
+    <!-- Cabecera Ajustada -->
+    <header class="relative h-[40vh] flex flex-col items-center justify-center text-center px-6">
+        <div class="z-10 max-w-4xl">
+            <h1 class="text-6xl md:text-8xl font-romantic hero-title mb-2">Para Anais Pérez Puig</h1>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="content-wrapper pb-32 relative z-10">
+        
+        <!-- Bloque 1 -->
+        <div class="glass-card reveal">
+            <div class="text-content">
+                Se que no soy bueno explicandome que te agobie te hice sentir mal intentando hacerlo que has cambiado y no quieres eso en tu vida pero 
+
+                No se como decirte que estoy enamorado de ti 
+
+                Que no es dependencia hacia ti aunque lo ves asi las palabras no te valen solo acciones y que es muy tarde para ti pero 
+
+                Vi en ti lo que siempre he buscando en una pareja 
+
+                Sin ti yo estoy bien pero 
+
+                Extraño tu voz tu risa tu forma de ser tu forma de hablar tus bromas tus manias decirte buenos dias o buenas noches decirte que te lo pases bien cuando sales tus dimelas tus problemas ayudarte en ellos aportar algo en tu vida tus audios tus caprichos tus frases tus stickers tu ñiñiñi que me digas bebe que te pongas como niña pequeña decirme que puedes sola y aun asi yo ayudarte tu forma de decirme las cosas tu forma de decirme que hiciera las cosas tus fotos tus videos tus llamadas tus miedos tus inseguridades tus deseos tus planes tus cosas cotidianas tus cuentos tu vida ser parte de ti que me consideres alguien que quieres en tu vida como pareja
             </div>
         </div>
-    </div>
 
-    <div class="grass-blades"></div>
-    <div class="grass-base"></div>
-    
-    <button id="backBtn" onclick="showCard()">Leer mensaje de nuevo</button>
-
-    <div id="messageCard">
-        <div class="content-card">
-            <h1 class="romantic-text text-3xl">Estas flores son para ti</h1>
-            
-            <div class="message-text space-y-4 text-left md:text-center">
-                <p>
-                    Quizás debería haberte mandado lo que quería hoy, tenía todo ahí planificado para hacerlo y seguramente te hubieras alegrado mucho.
-                </p>
-                
-                <p>
-                    De igual manera te hago un pequeño detalle que espero que te guste mucho. Estas flores son para ti, aunque no puedas tocarlas ni puedas olerlas, el significado es el mismo.
-                </p>
-
-                <p class="italic font-medium text-gray-800">
-                    Es una muestra de amor, de cariño, de que te mereces lo mejor y aquí estoy yo para dártelo y hacer que tu corazoncito se sienta cómodo y amado siempre.
-                </p>
-
-                <p>
-                    Espero que cuando abras tus ojitos lindos veas este mensaje y te sientas feliz, aunque no es mucho y regalarte las flores reales con el peluche de pandita que quería hubiese sido mucho mejor, espero que te siga gustando el gesto.
-                </p>
+        <!-- Bloque 2 -->
+        <div class="glass-card reveal">
+            <div class="text-content">
+                Extraño cada parte de ti todas las cosas que en conjunto te hacen a ti poco a poco te volviste muy especial para mi y se que lo fui aunque quizas no soy el chico ni el novio perfecto y se que no buscas eso pero con todas mis tonterias, dificultades e inseguridades te aleje del todo y te genere mas ahogo del que tenias y no supe como gestionar todo eso para que te sientieras bien 
             </div>
+        </div>
 
-            <button class="btn-view" onclick="hideCard()">
-                <span>Ver flores al completo</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        <!-- Bloque 3 -->
+        <div class="glass-card reveal">
+            <div class="text-content">
+                Me siento mal conmigo mismo por eso porque te hice mal cuando necesitabas otra cosa y si quiero ser tu novio regalarte flores pequeños detalles anillos collares por eso te pregunte hace poco tus medidas porque quiero conocer a tu familia acompañarte a hacerte santo ser tu hombre tu esposo que trabajemos que vivamos juntos alquilados viajar comprarte todas las cosas que te gustan  y tener dos hijos y estar juntos desde ahora hasta viejitos y te prometi que seria tuyo para siempre y lo sere y lo soy porque lo que hace un año fue un estas en españa? se volvio en una historia de amor y eres la persona de la cual me enamore porque lo que para ti era algo que podria alejarme como tu caracter me hacia acercarme mas a ti 
+            </div>
+        </div>
+
+        <!-- Bloque 4 -->
+        <div class="glass-card reveal">
+            <div class="text-content">
+                Se que todo se dificulto por la distancia el no poder vernos y que te gusta el cariño de cerca y a mi tambien me gusta eso no tenerlo en la distancia 
+
+                Para el dia 10 mas o menos ire a torrevieja y espero verte en alicante 
+
+                Te amo anais perez puig te amo mucho
+            </div>
+        </div>
+
+        <!-- Cierre visual -->
+        <div class="text-center mt-12 reveal">
+            <div class="inline-block p-4 rounded-full bg-rose-100 text-rose-600 mb-4 shadow-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
-            </button>
-
-            <p class="romantic-text mt-4 text-2xl">
-                Te amo, bebé hermosa.
-            </p>
-        </div>
-    </div>
-
-    <div class="tulip-container" id="flowerGarden">
-        <div class="tulip">
-            <div class="flower-head"></div>
-            <div class="stem" style="height: 180px;"><div class="leaf"></div></div>
-        </div>
-        <div class="tulip hidden md:block">
-            <div class="flower-head" style="transform: scale(0.9);"></div>
-            <div class="stem" style="height: 150px;"><div class="leaf leaf-right"></div></div>
-        </div>
-        <div class="tulip">
-            <div class="flower-head" style="width: 55px; height: 65px;"></div>
-            <div class="stem" style="height: 220px;"><div class="leaf leaf-right"></div></div>
-        </div>
-        <div class="tulip hidden sm:block">
-            <div class="flower-head" style="transform: scale(0.85);"></div>
-            <div class="stem" style="height: 140px;"><div class="leaf"></div></div>
-        </div>
-        <div class="tulip">
-            <div class="flower-head"></div>
-            <div class="stem" style="height: 190px;">
-                <div class="leaf"></div>
-                <div class="leaf leaf-right" style="bottom: 120px;"></div>
             </div>
         </div>
-    </div>
+
+    </main>
 
     <script>
-        function hideCard() {
-            document.getElementById('messageCard').classList.add('hidden-card');
-            document.getElementById('flowerGarden').classList.add('expanded');
-            document.getElementById('pandaContainer').classList.add('visible');
-            document.getElementById('backBtn').style.opacity = '1';
+        // Animación de corazones
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.opacity = Math.random() * 0.4 + 0.3;
+            heart.style.fontSize = Math.random() * 25 + 15 + 'px';
+            heart.style.color = '#fb7185';
+            document.getElementById('heart-container').appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
         }
+        setInterval(createHeart, 500);
 
-        function showCard() {
-            document.getElementById('messageCard').classList.remove('hidden-card');
-            document.getElementById('flowerGarden').classList.remove('expanded');
-            document.getElementById('pandaContainer').classList.remove('visible');
-            document.getElementById('backBtn').style.opacity = '0';
+        // Control de visibilidad al hacer scroll
+        const reveals = document.querySelectorAll('.reveal');
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            reveals.forEach(reveal => {
+                const revealTop = reveal.getBoundingClientRect().top;
+                if(revealTop < triggerBottom) {
+                    reveal.classList.add('active');
+                }
+            });
         }
-
-        const petalsContainer = document.getElementById('petals');
-        const petalCount = 15;
-
-        for (let i = 0; i < petalCount; i++) {
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = (Math.random() * 5 + 7) + 's';
-            petal.style.animationDelay = (Math.random() * 5) + 's';
-            petal.style.opacity = Math.random() * 0.6;
-            petalsContainer.appendChild(petal);
-        }
+        window.addEventListener('scroll', checkReveal);
+        window.onload = checkReveal;
     </script>
 </body>
 </html>
